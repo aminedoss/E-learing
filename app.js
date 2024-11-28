@@ -14,6 +14,7 @@ const errroMiddelware = require("./middelwares/errroMiddelware.js");
 const app = express();
 connectDB();
 app.use(express.json());
+app.use(cors());
 app.use("/api/v1/test", testRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes)
@@ -22,7 +23,7 @@ app.use("/api/v1/Courses", CourseRoutes);
 app.use("/api/v1/CV", CvRoutes);
 app.use(errroMiddelware);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3300;
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}...`);
 });
