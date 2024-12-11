@@ -8,7 +8,7 @@ const authRoutes = require("./routes/authRoutes.js");
 const userRoutes = require("./routes/userRoutes.js");
 const jobRoutes = require("./routes/jobRoutes.js");
 const CvRoutes = require("./routes/CvRoutes.js");
-
+const QuizRoutes = require("./routes/QuizRoutes.js");
 const CourseRoutes = require("./routes/CourseRoutes.js");
 const errroMiddelware = require("./middelwares/errroMiddelware.js");
 const app = express();
@@ -21,6 +21,7 @@ app.use("/api/v1/users", userRoutes)
 app.use("/api/v1/job", jobRoutes);
 app.use("/api/v1/Courses", CourseRoutes);
 app.use("/api/v1/CV", CvRoutes);
+app.use("/api/v1/quiz", QuizRoutes);
 app.use(errroMiddelware);
 
 const port = process.env.PORT || 3300;

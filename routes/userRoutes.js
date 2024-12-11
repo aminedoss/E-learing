@@ -1,8 +1,10 @@
 const express = require("express");
-const { updateUserController } = require("../Controllers/userController.js");
-const { userAuth } = require("../middelwares/authMiddleware.js"); // Assurez-vous que l'import est correct
+const { updateUserController,getAllUsers } = require("../Controllers/userController.js");
+const {userAuth,isAdmin} = require("../middelwares/authMiddleware.js");
 const router = express.Router();
 //console.log(typeof updateUserController); 
 //console.log(typeof userAuth); 
 router.patch("/update-user/:id", userAuth, updateUserController);
+router.get("/All-user",userAuth,isAdmin,getAllUsers);
+
 module.exports = router;

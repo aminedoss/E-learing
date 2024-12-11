@@ -1,22 +1,34 @@
-const updateUserController = async (req, res, next) => {
-    const { name, email, lastName } = req.body;
-    if (!name || !email || !lastName) {
-        return next("Please Provide All Fields");
-    }
+const UserModel = require("../Models/UserModel");
+const getAllUsers = async (req, res) => {
     try {
-        const user = await UserModel.findOne({ _id: req.user.userId });
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-        user.name = name;
-        user.lastName = lastName;
-        user.email = email;
-        await user.save();
-        const token = user.createJWT();
-        res.status(200).json({ user, token });
+        const users = await UserModel.find().select('-password'); // Ne pas inclure le mot de passe dans la réponse
+        res.status(200).json({
+            success: true,
+            count: users.length,
+            data: users,
+        });
     } catch (error) {
-        next(error);
+        console.error("Error fetching users:", error);
+        res.status(500).json({
+            success: false,
+            message: "Server error",
+        });
     }
 };
+const updateUserController = async (req, res, next) => {
+    try {
+        const user = await UserModel.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+        });
+        res.status(200).json({
+            message: "Users Updated !!!",
+            data: {
+                user,
+            },
+        });
+    } catch (err) {
+        next(err);
+    }
+  };
 
-module.exports = { updateUserController };
+module.exports = { updateUserController,getAllUsers };

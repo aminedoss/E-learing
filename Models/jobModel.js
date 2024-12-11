@@ -25,6 +25,19 @@ const jobSchema = new mongoose.Schema(
         default: "Sousse",
         required: [true, "Work location is required"],
     },
+    workLocation: {
+        type: String,
+        default: "Sousse",
+        required: [true, "Work location is required"],
+    },
+    company_phone: {
+        type: String,
+        required: [true, "phone is required"],
+    },
+    company_email: {
+        type: String,
+        required: [true, "email is required"],
+    },
     createdBy: {
         type: mongoose.Types.ObjectId,
         ref: "User",

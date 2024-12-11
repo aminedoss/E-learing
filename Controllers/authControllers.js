@@ -41,7 +41,7 @@ const loginController = async function (req, res, next) {
     }
     try {
         // Trouver l'utilisateur par e-mail
-        const user = await User.findOne({ email }).select("+password"); // Utilisez `user` au lieu de redéclarer `User`.
+        const user = await User.findOne({ email }).select("+password role"); // Utilisez `user` au lieu de redéclarer `User`.
         if (!user) {
             return next("Invalid username or password");
         }
@@ -54,11 +54,13 @@ const loginController = async function (req, res, next) {
 
         user.password = undefined;
         const token = user.createJWT();
+        
         res.status(200).json({
             success: true,
             message: "Login successfully",
             user,
             token,
+            role: user.role,
         });
     } catch (error) {
         next(error);

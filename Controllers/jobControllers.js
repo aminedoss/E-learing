@@ -17,7 +17,8 @@ const createJobController = async (req, res, next) => {
 
 const getAllJobsController = async (req, res, next) => {
     try {
-        const jobs = await jobModel.find({ createdBy: req.user.userId });
+        //const jobs = await jobModel.find({ createdBy: req.user.userId });
+        const jobs = await jobModel.find();
         res.status(200).json({
             totalJobs: jobs.length,
             jobs,
