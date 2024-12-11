@@ -3,9 +3,17 @@ const mongoose = require("mongoose");
 
 const createJobController = async (req, res, next) => {
     try {
-        const { company, position } = req.body;
-        if (!company || !position) {
-            return next("Please Provide All Fields");
+        // Déstructurer tous les champs nécessaires du corps de la requête
+        const {
+            company,
+            position,
+            workType,
+            workLocation,
+            company_phone,
+            company_email,
+        } = req.body;
+        if (!company || !position || !workType || !workLocation || !company_phone || !company_email) {
+            return next("Please provide all fields");
         }
         req.body.createdBy = req.user.userId;
         const job = await jobModel.create(req.body);
@@ -14,6 +22,7 @@ const createJobController = async (req, res, next) => {
         next(error);
     }
 };
+
 
 const getAllJobsController = async (req, res, next) => {
     try {
